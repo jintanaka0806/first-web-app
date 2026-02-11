@@ -113,7 +113,7 @@
 </div>
 
 <script>
-window.addEventListener('load', ()=> {
+window.addEventListener('load', () => {
   const splash = document.getElementById('splash');
   const inputScreen = document.getElementById('input-screen');
   const postsScreen = document.getElementById('posts-screen');
@@ -121,14 +121,23 @@ window.addEventListener('load', ()=> {
   const input = document.getElementById('post-input');
   const postsContainer = document.querySelector('.posts');
 
+  // ===== ここにサンプルの他人投稿データを置く =====
+  const otherUsersPosts = [
+    { text: 'たのし', likes: 3, reply: 'いいね！' },
+    { text: '😊元気', likes: 1, reply: null },
+    { text: 'おやす', likes: 0, reply: null }
+  ];
   // ロゴ → 入力画面
-  setTimeout(()=> {
-    splash.classList.add('fade-out');
-    setTimeout(()=> {
-      splash.style.display='none';
-      inputScreen.style.display='flex';
-    }, 1500);
-  }, 2000);
+ // ロゴ→入力画面切替
+setTimeout(() => {
+  splash.classList.add('fade-out');
+  setTimeout(() => {
+    splash.style.display = 'none';
+    inputScreen.style.display = 'flex';
+    // ここでは投稿一覧はまだ表示しない
+  }, 1500);
+}, 2000);
+
 
   // ローカルストレージから投稿を読み込み
   let allPosts = JSON.parse(localStorage.getItem('allPosts') || '[]');
