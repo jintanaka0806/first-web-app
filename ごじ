@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ごじ</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f6f7f9;
+      margin: 0;
+      padding: 16px;
+    }
+    h1 {
+      text-align: center;
+      margin: 8px 0 4px;
+    }
+    .sub {
+      text-align: center;
+      color: #666;
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    input {
+      width: 100%;
+      font-size: 18px;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      margin-top: 8px;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background: #111;
+      color: #fff;
+    }
+    button:disabled {
+      background: #aaa;
+    }
+    .post {
+      font-size: 18px;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .time {
+      font-size: 12px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>ごじ</h1>
+  <div class="sub">17時以降、今日を5文字で</div>
+
+  <div class="card">
+    <input id="text" placeholder="5文字で書く" maxlength="5" />
+    <button id="postBtn">投稿する</button>
+    <div id="msg" class="time"></div>
+  </div>
+
+  <div class="card" id="timeline">
+    <!-- 投稿がここに出る -->
+  </div>
+
+  <script>
+    const postBtn = document.getElementById("postBtn");
+    const textInput = document.getElementById("text");
+    const msg = document.getElementById("msg");
+    const timeline = document.getElementById("timeline");
+
+    const dummyPosts = ["数学死", "音楽沼", "😴帰宅", "部活疲", "神曲中"];
+
+    function canPostNow() {
+      const hour = new Date().getHours();
+      return hour >= 17 && hour < 24;
+    }
+
+    function postedToday() {
+      const last = localStorage.getItem("goji_last_post");
+      const today = new Date().toDateString();
+      return last === today;
+    }
+
+    function renderTimeline(myPost) {
+      timeline.innerHTML = "";
+      const posts = [...dummyPosts];
+      if (myPost) posts.unshift(myPost);
+
+      posts.forEach(p => {
+        const div = document.createElement("div");
+        div.className = "post";
+        div.textContent = p;
+        timeline.appendChild(div);
+      });
+    }
+
+    // 初期表示
+    renderTimeline(localStorage.getItem("goji_post"));
+
+    postBtn.onclick = () => {
+      if (!canPostNow()) {
+        msg.textContent = "17時以降に投稿できます";
+        return;
+      }
+      if (postedToday()) {
+        msg.textContent = "今日はもう投稿済みです";
+        return;
+      }
+      const text = textInput.value.trim();
+      if (text.length === 0) return;
+
+      localStorage.setItem("goji_post", text);
+      localStorage.setItem("goji_last_post", new Date().toDateString());
+      renderTimeline(text);
+      msg.textContent = "投稿しました";
+      textInput.value = "";
+    };
+  </script>
+
+</body>
+</html>
