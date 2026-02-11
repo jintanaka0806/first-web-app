@@ -76,70 +76,22 @@
     }
 
     /* 投稿画面（最初は非表示） */
-#main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;  /* 画面全体 */
-  padding: 16px;
-  box-sizing: border-box;
-}
+<!-- 入力画面 -->
+<div id="input-screen">
+  <div class="form-wrapper">
+    <div class="input-area">
+      <input type="text" id="post-input" maxlength="5" placeholder="5文字入力">
+      <button id="post-btn">→</button>
+    </div>
+  </div>
+</div>
 
-.form-wrapper {
-  margin-bottom: 24px;   /* 投稿リストと少し間隔 */
-}
+<!-- 投稿一覧画面（最初は非表示） -->
+<div id="posts-screen" style="display:none;">
+  <h2>みんなの投稿</h2>
+  <div class="posts"></div>
+</div>
 
-.posts {
-  width: 100%;
-  max-width: 400px;      /* 任意の幅 */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow-y: auto;      /* 投稿が増えてもスクロール */
-  max-height: 60vh;      /* 高さ制限 */
-}
-.posts div {
-  background: #fff;
-  padding: 12px 16px;
-  margin: 8px 0;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  width: 100%;
-  text-align: center;
-}
-
-
-    /* 投稿フォーム */
-    .input-area {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 24px;
-    }
-
-    .input-area input {
-      width: 120px;
-      padding: 8px;
-      font-size: 16px;
-      text-align: center;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-
-    .input-area button {
-      padding: 8px 16px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: none;
-      background-color: #333;
-      color: #fff;
-      cursor: pointer;
-    }
-
-    .posts {
-      margin-top: 24px;
-      text-align: center;
-    }
   </style>
 </head>
 <body>
