@@ -167,32 +167,33 @@
       // ===============================
       // 投稿ボタンの処理
       // ===============================
-      btn.addEventListener('click', () => {
-        const text = input.value.trim();
+     btn.addEventListener('click', () => {
+  const text = input.value.trim();
 
-        // 5文字以内チェック
-        if (!text || text.length > 5) {
-          alert('5文字以内で入力してください');
-          return;
-        }
+  // 5文字ぴったりチェック
+  if (text.length !== 5) {
+    alert('5文字ぴったりで入力');
+    return;
+  }
 
-        // 投稿をローカルストレージに保存
-        let allPosts = JSON.parse(localStorage.getItem('allPosts') || '[]');
-        allPosts.unshift(text); // 新しい投稿を先頭に追加
-        localStorage.setItem('allPosts', JSON.stringify(allPosts));
+  // 投稿をローカルストレージに保存
+  let allPosts = JSON.parse(localStorage.getItem('allPosts') || '[]');
+  allPosts.unshift(text); // 新しい投稿を先頭に追加
+  localStorage.setItem('allPosts', JSON.stringify(allPosts));
 
-        // 画面切り替え：入力画面 → 投稿一覧画面
-        inputScreen.style.display = 'none';
-        postsScreen.style.display = 'block';
+  // 画面切り替え：入力画面 → 投稿一覧画面
+  inputScreen.style.display = 'none';
+  postsScreen.style.display = 'block';
 
-        // 投稿一覧に表示
-        posts.innerHTML = '';
-        allPosts.forEach(p => {
-          const div = document.createElement('div');
-          div.textContent = p;
-          posts.appendChild(div);
-        });
-      });
+  // 投稿一覧に表示
+  posts.innerHTML = '';
+  allPosts.forEach(p => {
+    const div = document.createElement('div');
+    div.textContent = p;
+    posts.appendChild(div);
+  });
+});
+
 
       // ===============================
       // ページ読み込み時に過去投稿があれば表示
