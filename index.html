@@ -6,6 +6,41 @@
   <title>ごじ</title>
   <style>
     /* 共通設定 */
+
+    /* 入力画面を中央にする */
+#input-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.form-wrapper {
+  text-align: center;
+}
+
+/* 投稿一覧画面 */
+#posts-screen {
+  padding: 16px;
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.posts div {
+  background: #fff;
+  padding: 12px 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
     body {
       margin: 0;
       font-family: 'Noto Sans JP', sans-serif;
@@ -41,17 +76,38 @@
     }
 
     /* 投稿画面（最初は非表示） */
-  #main {
-  display: none;
-  width: 100%;
-  height: 100vh;          /* 画面全体の高さ */
-  display: flex;           /* フレックス化 */
-  justify-content: center; /* 横中央 */
-  align-items: center;     /* 縦中央 */
-  flex-direction: column;  /* 上下に積む */
+#main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;  /* 画面全体 */
   padding: 16px;
   box-sizing: border-box;
 }
+
+.form-wrapper {
+  margin-bottom: 24px;   /* 投稿リストと少し間隔 */
+}
+
+.posts {
+  width: 100%;
+  max-width: 400px;      /* 任意の幅 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;      /* 投稿が増えてもスクロール */
+  max-height: 60vh;      /* 高さ制限 */
+}
+.posts div {
+  background: #fff;
+  padding: 12px 16px;
+  margin: 8px 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  width: 100%;
+  text-align: center;
+}
+
 
     /* 投稿フォーム */
     .input-area {
@@ -121,20 +177,37 @@
       }, 2000);
 
       // 投稿処理
-      btn.addEventListener('click', () => {
-        const text = input.value.trim();
-        if (text && text.length <= 5) {
-          const div = document.createElement('div');
-          div.textContent = text;
-          div.style.margin = '8px 0';
-          div.style.fontSize = '20px';
-          posts.prepend(div);
-          input.value = '';
-        } else {
-          alert('5文字以内で入力してください');
-        }
-      });
-    });
+     const btn = document.getElementById('post-btn');
+const input = document.getElementById('post-input');
+const postsScreen = document.querySelector('#posts-screen');
+const inputScreen = document.querySelector('#input-screen');
+const posts = document.querySelector('.posts');
+
+btn.addEventListener('click', () => {
+  const text = input.value.trim();
+  if (!text || text.length > 5) {
+    alert('5文字以内で入力してください');
+    return;
+  }
+
+  // 投稿を保存（ローカルストレージ）
+  let allPosts = JSON.parse(localStorage.getItem('allPosts') || '[]');
+  allPosts.unshift(text);
+  localStorage.setItem('allPosts', JSON.stringify(allPosts));
+
+  // 画面切り替え
+  inputScreen.style.display = 'none';
+  postsScreen.style.display = 'block';
+
+  // 投稿を表示
+  posts.innerHTML = '';
+  allPosts.forEach(p => {
+    const div = document.createElement('div');
+    div.textContent = p;
+    posts.appendChild(div);
+  });
+});
+
   </script>
 </body>
 </html>
