@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ごじ</title>
+<title>ごじ - ミニSNS</title>
 <style>
   body {
     margin: 0;
@@ -24,11 +24,10 @@
     flex-direction: column;
   }
   #splash.fade-out { opacity: 0; }
-  #splash h1 {
-    font-size: 72px;
-    font-weight: 900;
-    color: #333;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+  /* 画像ロゴ */
+  #splash img {
+    width: 200px;       /* 好きなサイズに変更可能 */
+    max-width: 80%;     /* 小さい画面でも縮小 */
   }
 
   /* ===== 入力画面 ===== */
@@ -94,7 +93,9 @@
 <body>
 
 <!-- ロゴ画面 -->
-<div id="splash"><h1>ごじ</h1></div>
+<div id="splash">
+  <img src="go.png" alt="ごじロゴ">
+</div>
 
 <!-- 入力画面 -->
 <div id="input-screen">
@@ -114,7 +115,6 @@
 
 <script>
 window.addEventListener('load', () => {
-  // HTML要素取得
   const splash = document.getElementById('splash');
   const inputScreen = document.getElementById('input-screen');
   const postsScreen = document.getElementById('posts-screen');
@@ -124,9 +124,9 @@ window.addEventListener('load', () => {
 
   // サンプル他人投稿データ
   const otherUsersPosts = [
-    { text: 'たのしいな', likes: 0, reply: 'いいね！' },
-    { text: '😊元気だ💛', likes: 0, reply: null },
-    { text: 'おやすみな', likes: 0, reply: null }
+    { text: 'たのし', likes: 3, reply: 'いいね！' },
+    { text: '😊元気', likes: 1, reply: null },
+    { text: 'おやす', likes: 0, reply: null }
   ];
 
   // ===== ロゴ表示 → 入力画面 =====
@@ -174,7 +174,7 @@ window.addEventListener('load', () => {
 
     // 5文字ぴったり
     if(text.length !== 5){
-      alert('5文字ぴったりで入力');
+      alert('5文字ぴったりで入力してください');
       return;
     }
 
