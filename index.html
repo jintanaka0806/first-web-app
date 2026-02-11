@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ごじ - ミニSNS</title>
+<title>ごじ</title>
 <style>
   body {
     margin: 0;
@@ -124,9 +124,9 @@ window.addEventListener('load', () => {
 
   // サンプル他人投稿データ
   const otherUsersPosts = [
-    { text: 'たのし', likes: 3, reply: 'いいね！' },
-    { text: '😊元気', likes: 1, reply: null },
-    { text: 'おやす', likes: 0, reply: null }
+    { text: 'たのしいな', likes: 0, reply: 'いいね！' },
+    { text: '今元気後無', likes: 0, reply: null },
+    { text: 'IMslp', likes: 0, reply: null }
   ];
 
   // ===== ロゴ表示 → 入力画面 =====
@@ -174,7 +174,7 @@ window.addEventListener('load', () => {
 
     // 5文字ぴったり
     if(text.length !== 5){
-      alert('5文字ぴったりで入力してください');
+      alert('5文字ぴったりで入力');
       return;
     }
 
