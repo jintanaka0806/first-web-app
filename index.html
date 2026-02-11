@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ごじ - ミニSNS</title>
+<title>ごじ</title>
 <style>
   body {
     margin: 0;
@@ -126,8 +126,8 @@ window.addEventListener('load', () => {
 
   // ===== サンプルで他人の投稿データを用意 =====
   const otherUsersPosts = [
-    { text: 'たのし', likes: 3, reply: 'いいね！' },
-    { text: '😊元気', likes: 1, reply: null },
+    { text: 'たのし', likes: 0, reply: 'いいね！' },
+    { text: '😊元気', likes: 0, reply: null },
     { text: 'おやす', likes: 0, reply: null }
   ];
 
@@ -150,8 +150,8 @@ window.addEventListener('load', () => {
       div.innerHTML = `
         <div>${post.text}</div>
         <div>
-          <button class="like-btn">いいね (${post.likes})</button>
-          <button class="reply-btn">リプライ</button>
+          <button class="like-btn">👍 (${post.likes})</button>
+          <button class="reply-btn">💬</button>
         </div>
       `;
       // いいね処理
@@ -185,6 +185,14 @@ window.addEventListener('load', () => {
     inputScreen.style.display = 'none';  // 入力画面を非表示
     postsScreen.style.display = 'block'; // 投稿一覧画面を表示
 
+    // ===== 自分の投稿を他人投稿の前に追加 =====
+  const postsToShow = [
+    { text: text, likes: 0, reply: null }, // 自分の投稿
+    ...otherUsersPosts                       // 他人の投稿サンプル
+  ];
+
+  renderPosts(postsToShow); // 表示
+});
     // サンプル他人投稿を表示
     renderPosts(otherUsersPosts);
   });
