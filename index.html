@@ -4,193 +4,303 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ごじ</title>
+
 <style>
-  body {
-    margin: 0;
-    font-family: 'Noto Sans JP', sans-serif;
-    background: #f2f2f2;
-  }
+body {
+  margin: 0;
+  font-family: 'Noto Sans JP', sans-serif;
+  background: #f2f2f2;
+  transition: 0.3s;
+}
 
-  /* ===== ロゴ画面 ===== */
-  #splash {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top:0; left:0; width:100%; height:100%;
-    background: #f2f2f2;
-    transition: opacity 1.5s;
-    z-index: 10;
-    flex-direction: column;
-  }
-  #splash.fade-out { opacity: 0; }
-  /* 画像ロゴ */
-  #splash img {
-    width: 200px;       /* 好きなサイズに変更可能 */
-    max-width: 80%;     /* 小さい画面でも縮小 */
-  }
+.dark {
+  background: #111;
+  color: white;
+}
 
-  /* ===== 入力画面 ===== */
-  #input-screen {
-    display: none; /* 初期は非表示 */
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  .form-wrapper { text-align: center; }
-  .input-area {
-    display: flex;
-    gap: 8px;
-  }
-  .input-area input {
-    width: 120px;
-    padding: 8px;
-    font-size: 16px;
-    text-align: center;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-  }
-  .input-area button {
-    padding: 8px 16px;
-    font-size: 16px;
-    border-radius: 8px;
-    border: none;
-    background-color: #333;
-    color: #fff;
-    cursor: pointer;
-  }
+/* ===== ヘッダー ===== */
+.app-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 56px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  z-index: 5;
+}
 
-  /* ===== 投稿一覧画面 ===== */
-  #posts-screen {
-    display: none; /* 初期は非表示 */
-    padding: 16px;
-  }
-  .posts {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-  }
-  .post-card {
-    background: #fff;
-    padding: 12px 16px;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-  .post-card button { 
-    margin: 4px; 
-    padding: 4px 8px; 
-    border-radius: 6px;
-    border:none; 
-    cursor:pointer;
-    background:none; 
-  }
+.dark .app-header { background: #1e1e1e; }
+
+/* ===== スプラッシュ ===== */
+#splash {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:#f2f2f2;
+  z-index:10;
+  transition:1.5s;
+}
+#splash.fade-out { opacity:0; }
+
+/* ===== 入力画面 ===== */
+#input-screen {
+  display:none;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+.input-area {
+  display:flex;
+  gap:8px;
+}
+.input-area input {
+  width:120px;
+  padding:8px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  text-align:center;
+}
+.input-area button {
+  padding:8px 16px;
+  border-radius:8px;
+  border:none;
+  background:#333;
+  color:white;
+  cursor:pointer;
+}
+
+/* ===== 投稿画面 ===== */
+#posts-screen {
+  display:none;
+  padding-top:70px;
+  padding-bottom:80px;
+}
+
+.posts {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+  padding:10px;
+}
+
+.post-card {
+  background:#fff;
+  width:100%;
+  max-width:400px;
+  padding:12px;
+  border-radius:14px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.08);
+  transition:0.2s;
+}
+
+.dark .post-card {
+  background:#1e1e1e;
+}
+
+.post-header {
+  display:flex;
+  justify-content:space-between;
+  font-size:12px;
+  color:gray;
+  margin-bottom:6px;
+}
+
+.post-text {
+  font-size:16px;
+  margin-bottom:8px;
+}
+
+.post-actions {
+  display:flex;
+  justify-content:space-around;
+}
+
+.post-actions button {
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-size:14px;
+  transition:0.2s;
+}
+
+.like-btn:active {
+  transform:scale(1.4);
+}
+
+.reply-box {
+  font-size:13px;
+  margin-top:6px;
+  color:#555;
+}
+
+.dark .reply-box { color:#aaa; }
+
+/* ===== 下ナビ ===== */
+.bottom-nav {
+  position:fixed;
+  bottom:0;
+  width:100%;
+  height:60px;
+  background:#fff;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  box-shadow:0 -2px 5px rgba(0,0,0,0.05);
+}
+
+.dark .bottom-nav { background:#1e1e1e; }
+
+.bottom-nav div {
+  cursor:pointer;
+  font-size:20px;
+}
 </style>
 </head>
+
 <body>
 
-<!-- ロゴ画面 -->
+<!-- スプラッシュ -->
 <div id="splash">
-  <img src="go.png" alt="ごじロゴ">
+  <h1>ごじ</h1>
 </div>
+
+<!-- ヘッダー -->
+<header class="app-header">
+  <div>ごじ</div>
+  <div id="mode-toggle">🌙</div>
+</header>
 
 <!-- 入力画面 -->
 <div id="input-screen">
-  <div class="form-wrapper">
-    <div class="input-area">
-      <input type="text" id="post-input" maxlength="5" placeholder="5文字入力">
-      <button id="post-btn">→</button>
-    </div>
+  <div class="input-area">
+    <input type="text" id="post-input" maxlength="5" placeholder="5文字入力">
+    <button id="post-btn">→</button>
   </div>
 </div>
 
-<!-- 投稿一覧画面 -->
+<!-- 投稿画面 -->
 <div id="posts-screen">
-  <h2>みんなの投稿</h2>
   <div class="posts"></div>
 </div>
 
+<!-- 下ナビ -->
+<nav class="bottom-nav">
+  <div>🏠</div>
+  <div id="new-post">➕</div>
+  <div>👤</div>
+</nav>
+
 <script>
-window.addEventListener('load', () => {
-  const splash = document.getElementById('splash');
-  const inputScreen = document.getElementById('input-screen');
-  const postsScreen = document.getElementById('posts-screen');
-  const btn = document.getElementById('post-btn');
-  const input = document.getElementById('post-input');
-  const postsContainer = document.querySelector('.posts');
+const splash = document.getElementById('splash');
+const inputScreen = document.getElementById('input-screen');
+const postsScreen = document.getElementById('posts-screen');
+const btn = document.getElementById('post-btn');
+const input = document.getElementById('post-input');
+const postsContainer = document.querySelector('.posts');
+const modeToggle = document.getElementById('mode-toggle');
+const newPostBtn = document.getElementById('new-post');
 
-  // サンプル他人投稿データ
-  const otherUsersPosts = [
-    { text: 'たのしいな', likes: 0, reply: 'いいね！' },
-    { text: '今元気後無', likes: 0, reply: null },
-    { text: 'IMslp', likes: 0, reply: null }
-  ];
+let posts = JSON.parse(localStorage.getItem("gojiPosts")) || [];
 
-  // ===== ロゴ表示 → 入力画面 =====
-  setTimeout(() => {
-    splash.classList.add('fade-out'); // フェードアウト
-    setTimeout(() => {
-      splash.style.display = 'none';   // 完全非表示
-      inputScreen.style.display = 'flex'; // 入力画面表示
-    }, 1500);
-  }, 2000);
+const otherUsersPosts = [
+  { text:'たのしいな', likes:0, time:'1分前' },
+  { text:'今元気後無', likes:0, time:'5分前' },
+  { text:'IMslp', likes:0, time:'10分前' }
+];
 
-  // 投稿一覧描画関数
-  function renderPosts(postsArray) {
-    postsContainer.innerHTML = '';
-    postsArray.forEach((post)=>{
-      const div = document.createElement('div');
-      div.className = 'post-card';
-      div.innerHTML = `
-        <div>${post.text}</div>
-        <div>
-          <button class="like-btn">👍 ${post.likes}</button>
-          <button class="reply-btn">💬</button>
-        </div>
-      `;
-      // いいね処理
-      div.querySelector('.like-btn').addEventListener('click', ()=>{
-        post.likes = (post.likes||0)+1;
-        renderPosts(postsArray);
-      });
-      // リプライ処理
-      div.querySelector('.reply-btn').addEventListener('click', ()=>{
-        const reply = prompt('リプライ入力:');
-        if(reply) {
-          post.reply = reply;
-          renderPosts(postsArray);
-        }
-      });
-      postsContainer.appendChild(div);
-    });
-  }
+function savePosts(){
+  localStorage.setItem("gojiPosts", JSON.stringify(posts));
+}
 
-  // 投稿ボタン押下
-  btn.addEventListener('click', () => {
-    const text = input.value.trim();
+function renderPosts(){
+  postsContainer.innerHTML = '';
+  const allPosts = [...posts, ...otherUsersPosts];
 
-    // 5文字ぴったり
-    if(text.length !== 5){
-      alert('5文字ぴったりで入力');
-      return;
+  allPosts.forEach((post,index)=>{
+    const div = document.createElement('div');
+    div.className='post-card';
+    div.innerHTML=`
+      <div class="post-header">
+        <span>user_${Math.floor(Math.random()*100)}</span>
+        <span>${post.time||'今'}</span>
+      </div>
+      <div class="post-text">${post.text}</div>
+      <div class="post-actions">
+        <button class="like-btn">♡ ${post.likes||0}</button>
+        <button class="reply-btn">💬</button>
+        ${index < posts.length ? '<button class="delete-btn">🗑</button>' : ''}
+      </div>
+      ${post.reply ? `<div class="reply-box">↪ ${post.reply}</div>`:''}
+    `;
+
+    div.querySelector('.like-btn').onclick=()=>{
+      post.likes=(post.likes||0)+1;
+      savePosts();
+      renderPosts();
+    };
+
+    div.querySelector('.reply-btn').onclick=()=>{
+      const reply=prompt("リプライ:");
+      if(reply){
+        post.reply=reply;
+        savePosts();
+        renderPosts();
+      }
+    };
+
+    if(index < posts.length){
+      div.querySelector('.delete-btn').onclick=()=>{
+        posts.splice(index,1);
+        savePosts();
+        renderPosts();
+      };
     }
 
-    inputScreen.style.display = 'none';
-    postsScreen.style.display = 'block';
-
-    // 自分の投稿を先頭に追加
-    const postsToShow = [
-      { text: text, likes: 0, reply: null }, // 自分の投稿
-      ...otherUsersPosts                        // 他人投稿
-    ];
-
-    renderPosts(postsToShow);
+    postsContainer.appendChild(div);
   });
+}
 
-});
+btn.onclick=()=>{
+  const text=input.value.trim();
+  if(text.length!==5){
+    alert("5文字ぴったり！");
+    return;
+  }
+
+  posts.unshift({text:text,likes:0,time:'今'});
+  savePosts();
+  input.value='';
+  inputScreen.style.display='none';
+  postsScreen.style.display='block';
+  renderPosts();
+};
+
+newPostBtn.onclick=()=>{
+  postsScreen.style.display='none';
+  inputScreen.style.display='flex';
+};
+
+modeToggle.onclick=()=>{
+  document.body.classList.toggle("dark");
+};
+
+setTimeout(()=>{
+  splash.classList.add("fade-out");
+  setTimeout(()=>{
+    splash.style.display='none';
+    inputScreen.style.display='flex';
+  },1500);
+},2000);
 </script>
+
 </body>
 </html>
